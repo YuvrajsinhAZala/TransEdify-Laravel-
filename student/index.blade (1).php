@@ -1,46 +1,33 @@
 @extends('layouts.student')
 
-@section('title', 'My Courses')
+@section('title', 'Notices')
 
 @section('content')
 <div class="row">
     <div class="col-12">
-        <h2 class="mb-4">My Courses</h2>
+        <h2 class="mb-4">Notices</h2>
     </div>
 </div>
 
 <div class="row">
     <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                @if($courses->count() > 0)
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Course Code</th>
-                                    <th>Course Name</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($courses as $course)
-                                    <tr>
-                                        <td><strong>{{ $course->course_code }}</strong></td>
-                                        <td>{{ $course->course_name }}</td>
-                                        <td>{{ $course->description ?? 'No description available' }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+        @if($notices->count() > 0)
+            @foreach($notices as $notice)
+                <div class="card mb-3">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">{{ $notice->title }}</h5>
+                        <small class="text-muted">{{ $notice->created_at->format('M d, Y') }}</small>
                     </div>
-                @else
-                    <div class="alert alert-info">
-                        <p class="mb-0">You are not enrolled in any courses yet.</p>
+                    <div class="card-body">
+                        <p class="mb-0">{{ $notice->content }}</p>
                     </div>
-                @endif
+                </div>
+            @endforeach
+        @else
+            <div class="alert alert-info">
+                <p class="mb-0">No notices available.</p>
             </div>
-        </div>
+        @endif
     </div>
 </div>
 @endsection
